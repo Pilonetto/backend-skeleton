@@ -46,4 +46,10 @@ export class Message {
 
   @Column({ nullable: true })
   errorMessage?: string;
+
+  @Column({ nullable: true })
+  interaction?: string; // Saber mais, Não tenho interesse, Texto livre etc
+
+  @Column({ nullable: true })
+  interactionType?: 'button' | 'text' | 'read' | 'delivered' | 'failed';
 }

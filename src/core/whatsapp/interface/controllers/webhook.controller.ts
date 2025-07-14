@@ -8,9 +8,13 @@ import {
   HttpCode,
   Logger,
 } from '@nestjs/common';
+import { RegisterMessageInteractionUseCase } from '../../application/use-cases/campaigns/register-message-interaction.use-case';
 
 @Controller('webhook')
 export class WhatsAppWebhookController {
+  constructor(
+    private readonly registerInteractionUseCase: RegisterMessageInteractionUseCase,
+  ) {}
   private readonly logger = new Logger(WhatsAppWebhookController.name);
 
   @Get()
@@ -39,22 +43,7 @@ export class WhatsAppWebhookController {
   ) {
     this.logger.log('Webhook recebido:', JSON.stringify(body, null, 2));
 
-    const entry = body.entry?.[0];
-    const changes = entry?.changes?.[0];
-    const value = changes?.value;
-
-    if (value?.messages) {
-      for (const message of value.messages) {
-        this.logger.log(`Mensagem de ${message.from}: ${message.text?.body}`);
-      }
-    }
-
-    if (value?.statuses) {
-      for (const status of value.statuses) {
-        this.logger.log(`Status: ${status.status} para ${status.recipient_id}`);
-      }
-    }
-
+    await this.registerInteractionUseCase.execute(body);
     return 'EVENT_RECEIVED';
   }
 }
