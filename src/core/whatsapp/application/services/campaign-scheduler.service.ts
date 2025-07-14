@@ -27,6 +27,10 @@ export class CampaignSchedulerService {
     await this.executeScheduledCampaigns();
   }
 
+  private delay(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   async executeScheduledCampaigns() {
     const now = new Date();
 
@@ -43,6 +47,7 @@ export class CampaignSchedulerService {
       await this.campaignRepo.save(campaign);
 
       const strategy = this.strategyFactory.create(campaign.senderNumber);
+      const cadence = campaign.senderNumber.cadenceInMs || 0;
 
       for (const recipient of campaign.recipients) {
         const phone = recipient.phone;
@@ -84,6 +89,10 @@ export class CampaignSchedulerService {
         }
 
         await this.contactRepo.save(recipient);
+
+        if (cadence > 0) {
+          await this.delay(cadence);
+        }
       }
 
       const hasFailure = campaign.recipients.some((r) => r.status === 'failed');
