@@ -49,7 +49,7 @@
           <div class="d-flex mt-4">
             <v-btn type="submit" color="primary">Salvar</v-btn>
             <v-spacer />
-            <v-btn text @click="visible = false" class="ms-2">Cancelar</v-btn>
+            <v-btn @click="visible = false" class="ms-2">Cancelar</v-btn>
           </div>
         </v-form>
       </v-card-text>
@@ -109,9 +109,9 @@ watch(
 
 async function handleSubmit() {
   if (isEditing.value && props.sender?.id) {
-    await http.put(`/sender-numbers/${props.sender.id}`, form.value)
+    await http.put(`api/sender-numbers/${props.sender.id}`, form.value)
   } else {
-    await http.post('/sender-numbers', form.value)
+    await http.post('api/sender-numbers', form.value)
   }
 
   emit('saved')

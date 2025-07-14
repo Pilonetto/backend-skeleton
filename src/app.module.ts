@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -9,16 +9,25 @@ import { SenderNumber } from './core/whatsapp/domain/entities/sender-number.enti
 import { Message } from './core/whatsapp/domain/entities/message.entity';
 import { Campaign } from './core/whatsapp/domain/entities/campaign.entity';
 import { CampaignContact } from './core/whatsapp/domain/entities/campaign-contact.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import path, { join } from 'path';
+import { Request, Response, NextFunction } from 'express';
+import { StaticModule } from './static/static.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/',
+    }),
+    StaticModule,
     ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: 'database.sqlite',
       entities: [Contact, Campaign, Message, SenderNumber, CampaignContact],
-      synchronize: true, // ❗ good for dev only
+      synchronize: true,
     }),
     UsersModule,
     WhatsappModule,

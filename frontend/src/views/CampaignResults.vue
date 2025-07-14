@@ -68,7 +68,7 @@ function formatDate(value: string): string {
 
 onMounted(async () => {
   try {
-    const { data } = await http.get(`/campaigns/${campaignId}/results`)
+    const { data } = await http.get(`api/campaigns/${campaignId}/results`)
     campaignName.value = data.name || `Campanha #${campaignId}`
     recipients.value = data.recipients || []
   } catch (err) {

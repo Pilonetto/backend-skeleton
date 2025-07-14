@@ -79,7 +79,17 @@ const visible = computed({
   set: (val) => emit('update:open', val),
 })
 
-const form = ref({
+interface FormData {
+  name: string
+  type: 'text' | 'media' | 'template'
+  templateName: string
+  content: string
+  caption: string
+  senderNumberId: { id: number; phoneNumber: string } | null
+  scheduledAt: string
+}
+
+const form = ref<FormData>({
   name: '',
   type: 'text',
   templateName: '',
@@ -119,7 +129,7 @@ async function onSenderSelected(sender: any) {
 
   if (!sender?.id) return
   try {
-    const { data } = await http.get(`/sender-numbers/${sender.id}/templates`)
+    const { data } = await http.get(`api/sender-numbers/${sender.id}/templates`)
     // Supondo que o backend já retorna { id, name }
     templateOptions.value = data
   } catch (error) {
@@ -137,7 +147,7 @@ async function submit() {
     templateName: form.value.templateName,
     content: form.value.content,
     caption: form.value.caption || undefined,
-    senderNumberId: form.value.senderNumberId.id,
+    senderNumberId: form.value.senderNumberId?.id ?? 0,
     scheduledAt: form.value.scheduledAt || undefined,
     phones: phonesText.value
       .split(/\r?\n/)
@@ -145,13 +155,13 @@ async function submit() {
       .filter((p) => p),
   }
 
-  await http.post('/campaigns', payload)
+  await http.post('api/campaigns', payload)
   emit('saved')
   emit('close')
 }
 
 onMounted(async () => {
-  const { data } = await http.get('/sender-numbers')
+  const { data } = await http.get('api/sender-numbers')
   senderOptions.value = data
 })
 </script>

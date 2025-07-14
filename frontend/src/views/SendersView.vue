@@ -43,7 +43,7 @@
           color="rgb(244, 67, 54)"
           size="small"
           variant="flat"
-          @click="deleteSender(item.id)"
+          @click="deleteSender(item?.id ?? 0)"
           style="cursor: pointer"
         >
           Excluir
@@ -80,7 +80,7 @@ const headers = [
 ]
 
 async function loadSenders() {
-  const { data } = await http.get('/sender-numbers')
+  const { data } = await http.get('api/sender-numbers')
   senders.value = data
 }
 
@@ -96,7 +96,7 @@ function editSender(sender: SenderNumber) {
 
 async function deleteSender(id: number) {
   if (confirm('Tem certeza que deseja excluir?')) {
-    await http.delete(`/sender-numbers/${id}`)
+    await http.delete(`api/sender-numbers/${id}`)
     await loadSenders()
   }
 }
