@@ -237,7 +237,7 @@ onMounted(async () => {
     campaignName.value = data.name || `Campanha #${campaignId}`
     recipients.value = data.recipients || []
   } catch (err) {
-    console.error('Erro ao buscar resultados da campanha:', err)
+    console.error('Erro ao buscar resultados da campanha', err)
   }
 })
 </script>
