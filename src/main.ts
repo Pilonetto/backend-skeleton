@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as bodyParser from 'body-parser';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -21,8 +22,20 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('docs', app, document);
   app.setGlobalPrefix('api');
+
+  app.use((req, res, next) => {
+    if (
+      req.method === 'GET' &&
+      !req.url.startsWith('/api') &&
+      !req.url.includes('.')
+    ) {
+      res.sendFile(join(__dirname, '..', 'public', 'index.html'));
+    } else {
+      next();
+    }
+  });
 
   await app.listen(3008, '0.0.0.0');
 }

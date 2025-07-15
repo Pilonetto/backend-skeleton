@@ -45,6 +45,12 @@ export class CreateCampaignDto {
   @IsOptional()
   templateName?: string;
 
+  @IsOptional()
+  positiveReplyTemplateName?: string;
+
+  @IsOptional()
+  negativeReplyTemplateName?: string;
+
   @IsArray()
   @IsPhoneNumber(null, { each: true })
   phones: string[];

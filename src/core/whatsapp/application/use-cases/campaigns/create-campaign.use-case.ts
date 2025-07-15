@@ -36,6 +36,13 @@ export class CreateCampaignUseCase {
       mediaUrl: dto.mediaUrl,
       caption: dto.caption,
       templateName: dto.templateName ? dto.templateName : null,
+      positiveReplyTemplateName: dto.positiveReplyTemplateName
+        ? dto.positiveReplyTemplateName
+        : null,
+
+      negativeReplyTemplateName: dto.negativeReplyTemplateName
+        ? dto.negativeReplyTemplateName
+        : null,
       scheduledAt: dto.scheduledAt ? new Date(dto.scheduledAt) : null,
       status: dto.scheduledAt ? 'scheduled' : 'pending',
       senderNumber: sender,

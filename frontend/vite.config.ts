@@ -7,6 +7,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/',
   build: {
     outDir: path.resolve(__dirname, '../public'),
     emptyOutDir: true, // limpa o diretório antes do build

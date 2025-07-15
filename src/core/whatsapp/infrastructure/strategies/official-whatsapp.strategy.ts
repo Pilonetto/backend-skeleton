@@ -61,7 +61,7 @@ export class OfficialWhatsappStrategy implements IWhatsappStrategy {
         template: {
           name: templateName,
           language: {
-            code: 'en_US',
+            code: 'pt_BR',
           },
         },
       },

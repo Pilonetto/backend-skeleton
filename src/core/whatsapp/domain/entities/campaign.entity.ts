@@ -51,6 +51,12 @@ export class Campaign {
   })
   templateName?: string;
 
+  @Column({ type: 'text', nullable: true })
+  positiveReplyTemplateName?: string;
+
+  @Column({ type: 'text', nullable: true })
+  negativeReplyTemplateName?: string;
+
   @CreateDateColumn()
   createdAt: Date;
 

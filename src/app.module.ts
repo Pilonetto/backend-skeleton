@@ -17,11 +17,7 @@ import { StaticModule } from './static/static.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
-      serveRoot: '/',
-    }),
-    StaticModule,
+
     ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: 'sqlite',
@@ -31,6 +27,12 @@ import { StaticModule } from './static/static.module';
     }),
     UsersModule,
     WhatsappModule,
+    StaticModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+      serveRoot: '/',
+      exclude: ['/api*'],
+    }),
   ],
 })
 export class AppModule {}

@@ -38,16 +38,36 @@
             <v-text-field v-model="form.caption" label="Legenda (opcional)" />
           </template>
 
-          <v-select
-            v-if="form.type === 'template'"
-            v-model="form.templateName"
-            label="Template"
-            :items="templateOptions"
-            item-title="name"
-            item-value="name"
-            :disabled="!form.senderNumberId"
-            required
-          />
+          <template v-if="form.type === 'template'">
+            <v-select
+              v-model="form.templateName"
+              label="Template principal"
+              :items="templateOptions"
+              item-title="name"
+              item-value="name"
+              :disabled="!form.senderNumberId"
+              required
+            />
+
+            <v-select
+              v-model="form.positiveReplyTemplateName"
+              label="Template para resposta positiva"
+              :items="templateOptions"
+              item-title="name"
+              item-value="name"
+              :disabled="!form.senderNumberId"
+              required
+            />
+
+            <v-select
+              v-model="form.negativeReplyTemplateName"
+              label="Template para resposta negativa"
+              :items="templateOptions"
+              item-title="name"
+              item-value="name"
+              :disabled="!form.senderNumberId"
+            />
+          </template>
 
           <v-textarea v-model="phonesText" label="Destinatários (um por linha)" rows="4" required />
 
@@ -83,6 +103,8 @@ interface FormData {
   name: string
   type: 'text' | 'media' | 'template'
   templateName: string
+  positiveReplyTemplateName: string
+  negativeReplyTemplateName: string
   content: string
   caption: string
   senderNumberId: { id: number; phoneNumber: string } | null
@@ -93,6 +115,8 @@ const form = ref<FormData>({
   name: '',
   type: 'text',
   templateName: '',
+  positiveReplyTemplateName: '',
+  negativeReplyTemplateName: '',
   content: '',
   caption: '',
   senderNumberId: null,
@@ -114,9 +138,11 @@ function resetForm() {
   form.value = {
     name: '',
     type: 'text',
+    templateName: '',
+    positiveReplyTemplateName: '',
+    negativeReplyTemplateName: '',
     content: '',
     caption: '',
-    templateName: '',
     senderNumberId: null,
     scheduledAt: '',
   }
@@ -130,7 +156,6 @@ async function onSenderSelected(sender: any) {
   if (!sender?.id) return
   try {
     const { data } = await http.get(`api/sender-numbers/${sender.id}/templates`)
-    // Supondo que o backend já retorna { id, name }
     templateOptions.value = data
   } catch (error) {
     console.error('Erro ao buscar templates:', error)
@@ -145,6 +170,8 @@ async function submit() {
     name: form.value.name,
     type: form.value.type,
     templateName: form.value.templateName,
+    positiveReplyTemplateName: form.value.positiveReplyTemplateName || undefined,
+    negativeReplyTemplateName: form.value.negativeReplyTemplateName || undefined,
     content: form.value.content,
     caption: form.value.caption || undefined,
     senderNumberId: form.value.senderNumberId?.id ?? 0,

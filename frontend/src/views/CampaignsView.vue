@@ -80,7 +80,7 @@ function formatDate(value?: string): string {
 }
 
 function viewResults(id: number) {
-  router.push(`api/campaigns/${id}/results`)
+  router.push(`campaigns/${id}/results`)
 }
 
 async function loadCampaigns() {

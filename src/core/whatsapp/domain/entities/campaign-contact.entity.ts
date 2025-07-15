@@ -24,7 +24,7 @@ export class CampaignContact {
     type: 'text',
     default: 'pending',
   })
-  status: 'pending' | 'sent' | 'failed';
+  status: 'pending' | 'sent' | 'failed' | 'read' | 'delivered' | 'success';
 
   @Column({ nullable: true })
   errorMessage?: string;
@@ -43,4 +43,10 @@ export class CampaignContact {
 
   @Column({ nullable: true })
   metaMessageId?: string;
+
+  @Column({ nullable: true })
+  interaction?: string; // Saber mais, Não tenho interesse, Texto livre etc
+
+  @Column({ nullable: true })
+  interactionType?: 'button' | 'text' | 'read' | 'delivered' | 'failed';
 }
