@@ -118,6 +118,7 @@ export class RegisterMessageInteractionUseCase {
             'pode enviar',
             'sim, quero saber mais!',
             'me mostra como',
+            'sim, quero contar',
           ];
           const negatives = [
             'nao',
@@ -127,7 +128,8 @@ export class RegisterMessageInteractionUseCase {
             'dispenso',
             'agora nao',
             'sem interesse',
-            'Agora nao, obrigado',
+            'agora nao, obrigado',
+            'nao tenho interesse agora',
           ];
 
           let replyType: 'positive' | 'negative' | 'unknown' = 'unknown';
