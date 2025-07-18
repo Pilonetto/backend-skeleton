@@ -32,6 +32,7 @@ import { CampaignSchedulerService } from './application/services/campaign-schedu
 import { FetchTemplatesUseCase } from './application/use-cases/sender-numbers/fetch-templates.use-case';
 import { WhatsAppWebhookController } from './interface/controllers/webhook.controller';
 import { RegisterMessageInteractionUseCase } from './application/use-cases/campaigns/register-message-interaction.use-case';
+import { HideCampaignUseCase } from './application/use-cases/campaigns/hide-campaign.use-case';
 
 @Module({
   imports: [
@@ -73,6 +74,7 @@ import { RegisterMessageInteractionUseCase } from './application/use-cases/campa
     CampaignSchedulerService,
     FetchTemplatesUseCase,
     RegisterMessageInteractionUseCase,
+    HideCampaignUseCase,
   ],
 })
 export class WhatsappModule {}

@@ -5,8 +5,9 @@
       v-model="drawer"
       :permanent="isDesktop"
       app
-      color="grey-lighten-4"
-      class="pt-4"
+      color="white"
+      class="pa-3 elevation-2"
+      width="240"
     >
       <v-list>
         <v-list-item class="px-4">
@@ -15,21 +16,37 @@
 
         <v-divider class="my-2" />
 
-        <v-list-item v-for="item in menuItems" :key="item.to" :to="item.to" link router exact>
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-          <v-list-item-title>{{ item.label }}</v-list-item-title>
+        <v-list-item
+          v-for="item in menuItems"
+          :key="item.to"
+          :to="item.to"
+          link
+          router
+          exact
+          class="d-flex align-center rounded-lg mb-2"
+          active-class="bg-primary text-white"
+        >
+          <template v-slot:prepend>
+            <v-icon class="me-3">{{ item.icon }}</v-icon>
+          </template>
+
+          <template v-slot:title>
+            <span class="text-body-1 font-weight-medium">{{ item.label }}</span>
+          </template>
         </v-list-item>
 
         <v-divider class="my-4" />
 
         <!-- Logout ou outro item fixo -->
-        <v-list-item @click="logout" class="text-red">
+        <v-list-item @click="logout" class="mt-auto rounded-lg text-red" style="cursor: pointer">
           <v-list-item-icon>
-            <v-icon>mdi-logout</v-icon>
+            <template v-slot:prepend>
+              <v-icon class="me-3">mdi-logout</v-icon>
+            </template>
           </v-list-item-icon>
-          <v-list-item-title>Sair</v-list-item-title>
+          <template v-slot:title>
+            <span class="text-body-1 font-weight-medium">Sair</span>
+          </template>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -61,9 +78,9 @@ const drawer = ref(isDesktop.value)
 
 const menuItems = [
   { label: 'Dashboard', icon: 'mdi-view-dashboard', to: '/' },
-  { label: 'Senders', icon: 'mdi-phone', to: '/senders' },
-  { label: 'Campaigns', icon: 'mdi-phone', to: '/campaign' },
-  { label: 'Settings', icon: 'mdi-cog', to: '/settings' },
+  { label: 'Senders', icon: 'mdi-account-voice', to: '/senders' },
+  { label: 'Campaigns', icon: 'mdi-email-multiple-outline', to: '/campaign' },
+  { label: 'Settings', icon: 'mdi-cog-outline', to: '/settings' },
 ]
 
 function logout() {

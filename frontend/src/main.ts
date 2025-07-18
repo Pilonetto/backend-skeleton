@@ -1,4 +1,5 @@
 import '@fontsource/space-grotesk/index.css'
+import '@mdi/font/css/materialdesignicons.css'
 import './assets/main.css'
 
 import { createApp } from 'vue'

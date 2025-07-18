@@ -57,6 +57,9 @@ export class Campaign {
   @Column({ type: 'text', nullable: true })
   negativeReplyTemplateName?: string;
 
+  @Column({ type: 'boolean', nullable: false, default: false })
+  hide?: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 

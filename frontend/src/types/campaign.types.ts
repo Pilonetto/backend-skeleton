@@ -5,4 +5,5 @@ export type Campaign = {
   status: 'scheduled' | 'pending' | 'executing' | 'completed' | 'failed'
   scheduledAt?: string
   createdAt: string
+  hide: boolean
 }
